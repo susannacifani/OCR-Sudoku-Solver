@@ -1,13 +1,13 @@
 import cv2
 
 # Grayscale
-img = cv2.imread("sudoku.png")
+img = cv2.imread("sudoku-test3.jpeg")
 img2 = img.copy()
 
 gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 # One way to get rid of the noise on the image and find edges, is by using Cannys edge detection algorithm 
-edged = cv2.Canny(gray, 300, 500)
+edged = cv2.Canny(gray, 100, 500)
 '''
 cv2.imshow('Contours', edged)
 cv2.waitKey(0)
@@ -38,4 +38,5 @@ sudoku_area = img[y:y+h, x:x+w]
 cv2.imshow('Sudoku Area', sudoku_area)
 cv2.waitKey(0)
 
+print(largest_contour)
 
