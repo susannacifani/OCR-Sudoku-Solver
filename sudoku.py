@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 # Grayscale
 img = cv2.imread("sudoku-test3.jpeg")
@@ -40,3 +41,23 @@ cv2.waitKey(0)
 
 print(largest_contour)
 
+
+# Trova il rettangolo delimitante minimo attorno al contorno
+rect = cv2.minAreaRect(largest_contour)
+center, size, angle = rect
+
+# Ottenere le dimensioni del rettangolo e la rotazione
+w, h = size
+if w < h:
+    w, h = h, w
+    angle += 90
+
+# Ruota l'immagine in base all'angolo
+M = cv2.getRotationMatrix2D(center, angle, 1)
+sudoku_area = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+
+# Ritaglia l'area del Sudoku
+sudoku_area = sudoku_area[int(center[1] - h / 2):int(center[1] + h / 2), int(center[0] - w / 2):int(center[0] + w / 2)]
+
+cv2.imshow('Sudoku Area', sudoku_area)
+cv2.waitKey(0)
